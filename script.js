@@ -88,6 +88,35 @@ function toggleBottom(){
   if (bottomText) bottomText.classList.toggle("logo-mode");
 }
 
+const bgVideo = document.getElementById("bg-video");
+
+const VIDEO_INTERVAL = 5 * 30 * 1000;
+const VIDEO_DURATION = 22000;
+
+function playBackgroundVideo(){
+
+  if(!bgVideo) return;
+
+  bgVideo.currentTime = 0;
+  bgVideo.style.opacity = "1";
+
+  bgVideo.play();
+
+  setTimeout(() => {
+
+    bgVideo.style.opacity = "0";
+    bgVideo.pause();
+
+  }, VIDEO_DURATION);
+
+}
+
+// elke 30 minuten
+setInterval(playBackgroundVideo, VIDEO_INTERVAL);
+
+// test bij laden (optioneel)
+// setTimeout(playBackgroundVideo, 3000);
+
 window.addEventListener("load", () => {
   updateCountdown();
   setInterval(updateCountdown, COUNTDOWN_UPDATE_MS);
