@@ -1,0 +1,251 @@
+/* =========================================================
+   BASIS / RESET
+   ========================================================= */
+
+:root{
+  /* Makkelijk aanpasbare maten (responsive met clamp) */
+  --top-text-size: clamp(40px, 6vw, 80px);      /* "Nog" */
+  --countdown-size: clamp(110px, 16vw, 200px);  /* grote dagen */
+  --bottom-text-size: clamp(32px, 6vw, 80px);   /* "dagen tot ..." */
+  --logo-size: clamp(220px, 28vw, 350px);       /* logo grootte */
+}
+
+body{
+  margin:0;                 /* standaard witruimte weg */
+  padding:0;                /* standaard padding weg */
+  height:100vh;             /* schermhoogte vullen */
+  overflow:hidden;          /* geen scrollbars */
+
+  font-family:'Poppins', sans-serif; /* lettertype */
+
+  display:flex;             /* flexbox layout */
+  justify-content:center;   /* horizontaal centreren */
+  align-items:center;       /* verticaal centreren */
+}
+
+/* =========================================================
+   ACHTERGROND
+   ========================================================= */
+
+.background{
+  position:fixed;           /* blijft altijd op de achtergrond staan */
+  inset:0;                  /* top/right/bottom/left = 0 (volledig scherm) */
+
+  background:url("achtergrond.jpg") no-repeat center center;
+  background-size:cover;    /* vult het scherm zonder te vervormen */
+
+  z-index:-1;               /* achter alle content */
+}
+
+/* =========================================================
+   CONTAINER (alles gecentreerd)
+   ========================================================= */
+
+.container{
+  display:flex;             /* flexbox aan */
+  flex-direction:column;    /* onder elkaar */
+
+  justify-content:center;   /* netjes in het midden */
+  align-items:center;
+
+  text-align:center;        /* tekst centreren */
+
+  color:white;              /* witte tekst */
+  text-shadow:2px 2px 10px rgba(0,0,0,0.7); /* leesbaarheid */
+}
+
+/* =========================================================
+   TEKSTEN
+   ========================================================= */
+
+.top-text{
+  font-size:var(--top-text-size);
+  font-weight:400;
+  margin-bottom:20px;       /* ruimte onder "Nog" */
+}
+
+/* =========================================================
+   COUNTDOWN + LOGO (op elkaar)
+   ========================================================= */
+
+.countdown-container{
+  position:relative;        /* nodig zodat logo absoluut kan positioneren */
+  display:grid;             /* handig om te centreren */
+  place-items:center;       /* centreert kinderen */
+}
+
+/* Dagen teller */
+.countdown{
+  font-size:var(--countdown-size);
+  font-weight:700;
+
+  opacity:1;                /* start zichtbaar */
+  transition:opacity 0.5s ease; /* fade animatie */
+}
+
+/* =========================================================
+   LOGO (SVG) bovenop de teller
+   ========================================================= */
+
+#logo{
+  width:var(--logo-size);
+  height:auto;
+
+  position:absolute;
+  top:50%;
+  left:54%;
+
+  transform:translate(-50%, -50%) scale(0.1);
+  opacity:0;
+
+  pointer-events:none;
+
+  transition:opacity 0.5s ease;
+}
+
+
+@keyframes logoZoomBounce{
+
+  0%{
+    transform:translate(-50%, -50%) scale(0.5);
+  }
+
+  60%{
+    transform:translate(-50%, -50%) scale(1.1);
+  }
+
+  100%{
+    transform:translate(-50%, -50%) scale(1);
+  }
+
+}
+
+
+@keyframes logoSpinOut{
+
+  0%{
+    transform:translate(-50%, -50%) scale(1) rotate(0deg);
+  }
+
+  100%{
+    transform:translate(-50%, -50%) scale(0.5) rotate(360deg);
+  }
+
+}
+
+@keyframes countdownPulse{
+
+  0%{
+    transform:scale(1);
+  }
+
+  50%{
+    transform:scale(1.05);
+  }
+
+  100%{
+    transform:scale(1);
+  }
+
+}
+
+.countdown{
+  animation:countdownPulse 3s ease-in-out infinite;
+}
+
+/* Als JS deze class toevoegt, fade het logo in */
+#logo.show{
+  opacity:1;                /* logo zichtbaar */
+}
+
+#logo-mascotte__letters{
+  transform-box: fill-box;  /* zorgt dat de transform-bounds in SVG kloppen */
+  transform-origin: center; /* draaien vanuit het midden van die groep */
+
+  animation: spin-reverse 20s linear infinite; /* 10s per rondje, constant */
+}
+
+#logo-mascotte__border{
+  transform-box: fill-box;
+  transform-origin: center;
+
+  animation: spin 40s linear infinite;
+}
+
+#logo-mascotte__eye-left{
+  transform-box: fill-box;
+  transform-origin: center;
+
+  animation: spin 25s linear infinite;
+}
+
+#logo-mascotte__eye-right{
+  transform-box: fill-box;
+  transform-origin: center;
+
+  animation: spin-reverse 15s linear infinite;
+}
+
+/* Keyframes voor de draai */
+@keyframes spin{
+  from{ transform: rotate(0deg); }
+  to  { transform: rotate(360deg); }
+}
+
+@keyframes spin-reverse {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(-360deg); }
+}
+
+#paaspop-text{
+  display:inline-block;
+}
+
+/* =========================================================
+   ONDERREGEL: perfect uitgelijnd + bold
+   ========================================================= */
+
+.bottom-text{
+  font-size:var(--bottom-text-size);
+  margin-top:20px;
+
+  display:flex;
+  justify-content:center;
+  align-items:baseline;     /* alles op dezelfde baseline */
+  gap:0.35em;
+
+  font-weight:700;          /* hele regel bold => geen strong mismatch */
+  line-height:1;            /* voorkomt “hangen” */
+}
+
+/* switch neemt de plek in van het woord “PAASPOP” */
+.paaspop-switch{
+  position:relative;
+  display:inline-block;
+
+  line-height:1;
+}
+
+/* tekst blijft in de flow (baseline klopt altijd) */
+#paaspop-text{
+  display:inline-block;
+}
+
+/* logo ligt exact over de tekst heen */
+#paaspop-logo{
+  position:absolute;
+  left:0;
+  bottom:0;
+
+  height:0.95em;
+  width:auto;
+
+  opacity:0;
+  transition:opacity .4s ease;
+
+  transform:translateY(0.02em); /* tweak voor PNG */
+}
+
+/* kruisfade */
+.bottom-text.logo-mode #paaspop-text{ opacity:0; }
+.bottom-text.logo-mode #paaspop-logo{ opacity:1; }
