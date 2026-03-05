@@ -153,16 +153,17 @@ body{
   animation:countdownPulse 3s ease-in-out infinite;
 }
 
-/* Als JS deze class toevoegt, fade het logo in */
+.countdown{ transition: opacity 0.5s ease; }
+
 #logo.show{
-  opacity:1;                /* logo zichtbaar */
+  opacity:1;
 }
 
 #logo-mascotte__letters{
-  transform-box: fill-box;  /* zorgt dat de transform-bounds in SVG kloppen */
-  transform-origin: center; /* draaien vanuit het midden van die groep */
+  transform-box: fill-box;
+  transform-origin: center;
 
-  animation: spin-reverse 20s linear infinite; /* 10s per rondje, constant */
+  animation: spin-reverse 20s linear infinite;
 }
 
 #logo-mascotte__border{
@@ -186,7 +187,6 @@ body{
   animation: spin-reverse 15s linear infinite;
 }
 
-/* Keyframes voor de draai */
 @keyframes spin{
   from{ transform: rotate(0deg); }
   to  { transform: rotate(360deg); }
@@ -201,24 +201,19 @@ body{
   display:inline-block;
 }
 
-/* =========================================================
-   ONDERREGEL: perfect uitgelijnd + bold
-   ========================================================= */
-
 .bottom-text{
   font-size:var(--bottom-text-size);
   margin-top:20px;
 
   display:flex;
   justify-content:center;
-  align-items:baseline;     /* alles op dezelfde baseline */
+  align-items:baseline;
   gap:0.35em;
 
-  font-weight:700;          /* hele regel bold => geen strong mismatch */
-  line-height:1;            /* voorkomt “hangen” */
+  font-weight:700;
+  line-height:1;
 }
 
-/* switch neemt de plek in van het woord “PAASPOP” */
 .paaspop-switch{
   position:relative;
   display:inline-block;
@@ -226,12 +221,10 @@ body{
   line-height:1;
 }
 
-/* tekst blijft in de flow (baseline klopt altijd) */
 #paaspop-text{
   display:inline-block;
 }
 
-/* logo ligt exact over de tekst heen */
 #paaspop-logo{
   position:absolute;
   left:0;
@@ -243,7 +236,128 @@ body{
   opacity:0;
   transition:opacity .4s ease;
 
-  transform:translateY(0.02em); /* tweak voor PNG */
+  transform:translateY(0.02em);
+}
+
+#collab{
+  position:absolute;
+  top:50%;
+  left:54%;
+  transform:translate(-50%, -50%);
+  z-index:6;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  gap:0;
+
+  opacity:0;
+  pointer-events:none;
+  transition: opacity .35s ease;
+
+  filter: blur(0px);
+}
+
+#collab.active{ opacity:1; }
+
+/* Paaspop */
+#collab-paaspop{
+  width: clamp(200px, 26vw, 340px);
+  height:auto;
+
+  transform: translateX(0) scale(0.5);
+  transform-origin:center;
+
+  /* smooth shift */
+  transition: transform .55s cubic-bezier(.2,.9,.2,1);
+}
+
+/* Bounce in */
+#collab.in #collab-paaspop{
+  animation: collabBounceIn .7s ease forwards;
+}
+@keyframes collabBounceIn{
+  0%   { transform: translateX(0) scale(0.5); }
+  60%  { transform: translateX(0) scale(1.1); }
+  100% { transform: translateX(0) scale(1); }
+}
+
+/* X */
+#collab-x{
+  font-size: clamp(52px, 7vw, 92px);
+  font-weight:800;
+  color:white;
+  text-shadow: 0 0 18px rgba(0, 0, 0, 0.55);
+
+  /* solo: neemt geen ruimte */
+  width:0;
+  overflow:hidden;
+
+  opacity:0;
+  transform: scale(0.5);
+
+  transition:
+    width .35s ease,
+    opacity .25s ease,
+    transform .25s ease;
+}
+
+/* UB */
+#collab-ub{
+  height: clamp(70px, 10vw, 130px);
+  width:auto;
+
+  /* solo: neemt geen ruimte */
+  max-width:0;
+  overflow:hidden;
+
+  opacity:0;
+  transform: translateX(30px) scale(0.96);
+
+  transition:
+    max-width .45s ease,
+    opacity .45s ease,
+    transform .45s ease;
+}
+
+/* REVEAL: zet gap aan + schuif paaspop links + open X/UB ruimte */
+#collab.reveal{
+  gap: clamp(10px, 2vw, 22px);
+}
+
+#collab.reveal #collab-paaspop{
+  animation:none; /* stop bounce keyframe */
+  transform: scale(1);
+}
+
+#collab.reveal #collab-x{
+  width: 1.1em;     /* nu krijgt de × ruimte (smooth) */
+  opacity:1;
+  transform: scale(1);
+}
+
+#collab.reveal #collab-ub{
+  max-width: 1000px; /* “open” naar zijn natuurlijke breedte */
+  opacity:1;
+  transform: translateX(0) scale(1);
+}
+
+/* OUT: spin out */
+#collab.out{
+  animation: collabOut .8s ease forwards;
+}
+@keyframes collabOut{
+  0%{
+    transform:translate(-50%, -50%) scale(1);
+    opacity:1;
+    filter: blur(0px);
+  }
+  100%{
+    transform:translate(-50%, -50%) scale(0.75);
+    opacity:0;
+    filter: blur(6px);
+  }
 }
 
 /* kruisfade */
