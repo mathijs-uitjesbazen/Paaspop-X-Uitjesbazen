@@ -1,31 +1,22 @@
-/* =========================================================
-   BASIS / RESET
-   ========================================================= */
-
 :root{
-  /* Makkelijk aanpasbare maten (responsive met clamp) */
-  --top-text-size: clamp(40px, 6vw, 80px);      /* "Nog" */
-  --countdown-size: clamp(110px, 16vw, 200px);  /* grote dagen */
-  --bottom-text-size: clamp(32px, 6vw, 80px);   /* "dagen tot ..." */
-  --logo-size: clamp(220px, 28vw, 350px);       /* logo grootte */
+  --top-text-size: clamp(40px, 6vw, 80px);
+  --countdown-size: clamp(110px, 16vw, 200px);
+  --bottom-text-size: clamp(32px, 6vw, 80px);
+  --logo-size: clamp(220px, 28vw, 350px);
 }
 
 body{
-  margin:0;                 /* standaard witruimte weg */
-  padding:0;                /* standaard padding weg */
-  height:100vh;             /* schermhoogte vullen */
-  overflow:hidden;          /* geen scrollbars */
+  margin:0;
+  padding:0;
+  height:100vh;
+  overflow:hidden;
 
-  font-family:'Poppins', sans-serif; /* lettertype */
+  font-family:'Poppins', sans-serif;
 
-  display:flex;             /* flexbox layout */
-  justify-content:center;   /* horizontaal centreren */
-  align-items:center;       /* verticaal centreren */
+  display:flex;
+  justify-content:center;
+  align-items:center;
 }
-
-/* =========================================================
-   ACHTERGROND
-   ========================================================= */
 
 .background{
   position:fixed;
@@ -50,55 +41,38 @@ body{
   z-index:-1;
 }
 
-/* =========================================================
-   CONTAINER (alles gecentreerd)
-   ========================================================= */
-
 .container{
-  display:flex;             /* flexbox aan */
-  flex-direction:column;    /* onder elkaar */
+  display:flex;
+  flex-direction:column;
 
-  justify-content:center;   /* netjes in het midden */
+  justify-content:center;
   align-items:center;
 
-  text-align:center;        /* tekst centreren */
+  text-align:center;
 
-  color:white;              /* witte tekst */
-  text-shadow:2px 2px 10px rgba(0,0,0,0.7); /* leesbaarheid */
+  color:white;
+  text-shadow:2px 2px 10px rgba(0,0,0,0.7);
 }
-
-/* =========================================================
-   TEKSTEN
-   ========================================================= */
 
 .top-text{
   font-size:var(--top-text-size);
   font-weight:400;
-  margin-bottom:20px;       /* ruimte onder "Nog" */
+  margin-bottom:20px;
 }
-
-/* =========================================================
-   COUNTDOWN + LOGO (op elkaar)
-   ========================================================= */
 
 .countdown-container{
-  position:relative;        /* nodig zodat logo absoluut kan positioneren */
-  display:grid;             /* handig om te centreren */
-  place-items:center;       /* centreert kinderen */
+  position:relative;
+  display:grid;
+  place-items:center;
 }
 
-/* Dagen teller */
 .countdown{
   font-size:var(--countdown-size);
   font-weight:700;
 
-  opacity:1;                /* start zichtbaar */
-  transition:opacity 0.5s ease; /* fade animatie */
+  opacity:1;
+  transition:opacity 0.5s ease;
 }
-
-/* =========================================================
-   LOGO (SVG) bovenop de teller
-   ========================================================= */
 
 #logo{
   width:var(--logo-size);
@@ -274,7 +248,6 @@ body{
 
 #collab.active{ opacity:1; }
 
-/* Paaspop */
 #collab-paaspop{
   width: clamp(200px, 26vw, 340px);
   height:auto;
@@ -282,11 +255,9 @@ body{
   transform: translateX(0) scale(0.5);
   transform-origin:center;
 
-  /* smooth shift */
   transition: transform .55s cubic-bezier(.2,.9,.2,1);
 }
 
-/* Bounce in */
 #collab.in #collab-paaspop{
   animation: collabBounceIn .7s ease forwards;
 }
@@ -296,14 +267,12 @@ body{
   100% { transform: translateX(0) scale(1); }
 }
 
-/* X */
 #collab-x{
   font-size: clamp(52px, 7vw, 92px);
   font-weight:800;
   color:white;
   text-shadow: 0 0 18px rgba(0, 0, 0, 0.55);
 
-  /* solo: neemt geen ruimte */
   width:0;
   overflow:hidden;
 
@@ -316,12 +285,10 @@ body{
     transform .25s ease;
 }
 
-/* UB */
 #collab-ub{
   height: clamp(70px, 10vw, 130px);
   width:auto;
 
-  /* solo: neemt geen ruimte */
   max-width:0;
   overflow:hidden;
 
@@ -334,29 +301,27 @@ body{
     transform .45s ease;
 }
 
-/* REVEAL: zet gap aan + schuif paaspop links + open X/UB ruimte */
 #collab.reveal{
   gap: clamp(10px, 2vw, 22px);
 }
 
 #collab.reveal #collab-paaspop{
-  animation:none; /* stop bounce keyframe */
+  animation:none;
   transform: scale(1);
 }
 
 #collab.reveal #collab-x{
-  width: 1.1em;     /* nu krijgt de × ruimte (smooth) */
+  width: 1.1em;
   opacity:1;
   transform: scale(1);
 }
 
 #collab.reveal #collab-ub{
-  max-width: 1000px; /* “open” naar zijn natuurlijke breedte */
+  max-width: 1000px;
   opacity:1;
   transform: translateX(0) scale(1);
 }
 
-/* OUT: spin out */
 #collab.out{
   animation: collabOut .8s ease forwards;
 }
@@ -373,6 +338,5 @@ body{
   }
 }
 
-/* kruisfade */
 .bottom-text.logo-mode #paaspop-text{ opacity:0; }
 .bottom-text.logo-mode #paaspop-logo{ opacity:1; }
